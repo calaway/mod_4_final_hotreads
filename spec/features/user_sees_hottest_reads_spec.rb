@@ -16,4 +16,16 @@ RSpec.feature "User visits root path", type: :feature do
       expect(page).to have_text(expected_content)
     end
   end
+
+  context "some reads are more than a day old" do
+    scenario "they see only reads from today" do
+      Link.create(url: "http://new.com").reads.create(created_at: Time.now())
+      Link.create(url: "http://old.com").reads.create(created_at: 25.hours.ago)
+
+      visit root_path
+
+      expect(page).to have_text("http://new.com")
+      expect(page).to_not have_text("http://old.com")
+    end
+  end
 end
