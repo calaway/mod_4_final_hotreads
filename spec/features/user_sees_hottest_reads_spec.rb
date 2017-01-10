@@ -14,6 +14,7 @@ RSpec.feature "User visits root path", type: :feature do
 
       expected_content = "Hot Reads! http://example11.com http://example10.com http://example9.com http://example8.com http://example7.com http://example6.com http://example5.com http://example4.com http://example3.com http://example2.com"
       expect(page).to have_text(expected_content)
+      expect(page).to_not have_text("http://example1.com")
     end
   end
 
